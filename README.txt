@@ -1,4 +1,4 @@
-Do-It-Now Ruby Application (v1.1)
+Do-It-Now Ruby Application (v1.0)
 
 README
 
