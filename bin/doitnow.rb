@@ -26,7 +26,7 @@ task3 = Task.new(nil, 'Complete school work.', 'Complete writing, math, reading 
 #Display Menu
 def menu_main
   puts ''
-  puts 'Do-It-Now - Software App (v1.1)'
+  puts 'Do-It-Now - Software App (v1.0)'
   puts 'Menu: Select letter and press Enter: (A) Create task, (B) Display tasks, (C) Update task, (D) Delete task, (E) Exit'
   print ': '
 end
