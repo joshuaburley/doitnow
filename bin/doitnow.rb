@@ -31,19 +31,57 @@ def menu_main
   print ': '
 end
 
+def is_user_input_valid(option, input_type, input_length, user_input)
+  
+  case input_type
+    when 'text'
+      if user_input.length > input_length 
+ 	print '%-60s' % "Text lgth too long (max lgth: #{input_length}, your lgth: #{user_input.length})! Re-try: " if option == 'add'
+	print '%-73s' % "Text lgth too long (max lgth: #{input_length}, your lgth: #{user_input.length})! Re-try: " if option == 'update'
+        is_user_input_valid(option, 'text', input_length, gets.chomp())
+      #elsif
+        #user_input.scan != only |a..z, A..Z, 0..9, ' '|
+        #return false
+      else
+        return user_input 
+      end
+    when 'date'	   
+      if user_input == ''
+	return user_input #Allows null value!
+      elsif user_input.length != input_length 
+      	print '%-60s' % "Invalid date format (mm/dd/yyyy)! Re-try: " if option == 'add'
+	print '%-73s' % "Invalid date format (mm/dd/yyyy)! Re-try: " if option == 'update'
+        is_user_input_valid(option, 'date', input_length, gets.chomp())
+      #elsif
+         #user_input.scan != only |01..12, '/', 01..31, '/', 2014..n|
+         #return false
+      else
+        return user_input 
+      end 
+    else
+      #Code should never get here!!
+      #Question: Can I remove this else statement or does the case syntax require it?
+  end #End of "input_type" case block.
+end
+
 def menu_create_task
   puts ''
   puts 'Add new task information at each prompt, press Enter to leave the field blank.'
-  print '%-31s' % 'Enter Task Name: '
-  new_name = gets.chomp()
-  print '%-31s' % 'Enter Task Description: '
-  new_desc = gets.chomp()
-  print '%-31s' % 'Enter Date Due (mm/dd/yyyy): '
-  new_date_due = gets.chomp()
-  print '%-31s' % 'Enter Date Done (mm/dd/yyyy): '
-  new_date_done = gets.chomp()
-  print '%-31s' % 'Enter User ID: '
-  new_user_id = gets.chomp()
+    
+  print '%-60s' % 'Enter Task Name (30 char. numbers/letters/spaces only!): '
+  new_name = is_user_input_valid('add', 'text', 30, gets.chomp())
+  
+  print '%-60s' % 'Enter Description (60 char. numbers/letters/spaces only!): '
+  new_desc = is_user_input_valid('add', 'text', 60, gets.chomp())
+  
+  print '%-60s' % 'Enter Date Due (required format: mm/dd/yyyy): '
+  new_date_due = is_user_input_valid('add', 'date', 10, gets.chomp())
+  
+  print '%-60s' % 'Enter Date Done (required format: mm/dd/yyyy): '
+  new_date_done = is_user_input_valid('add', 'date', 10, gets.chomp())
+  
+  print '%-60s' % 'Enter User ID (8 char. numbers/letters/spaces only!): '
+  new_user_id = is_user_input_valid('add', 'text', 8, gets.chomp())
 
   new_task = Task.new(nil, new_name, new_desc, new_date_due, new_date_done, new_user_id)
   
@@ -73,7 +111,7 @@ def is_update_menu_option_good(update_type, update_task_num)
         update_task(task_num_as_int-1) if update_type == 'edit'
         delete_task(task_num_as_int)   if update_type == 'delete'
     else
-      print "Invalid Task number (#{task_num_as_int}) (total tasks: #{@list.count}), please re-try: "
+      print "Invalid Task number (#{update_task_num}) (total tasks: #{@list.count}), please re-try: "
       is_update_menu_option_good('edit', gets.chomp())   if update_type == 'edit'
       is_update_menu_option_good('delete', gets.chomp()) if update_type == 'delete' 
     end
@@ -83,24 +121,24 @@ end
 def update_task(task_index)
   puts ''
   puts "Update the Task #{task_index+1} information at each prompt, press Enter to leave the field unchanged."
-  print '%-38s' % 'Enter updated Task Name: '
-  name = gets.chomp()
+  print '%-73s' % 'Enter updated Task Name (30 char. numbers/letters/spaces only!): '
+  name = is_user_input_valid('update', 'text', 30, gets.chomp())
   @list.tasks[task_index].name=(name) if name != '' #Shorter version of the Ternary operator.
   
-  print '%-38s' % 'Enter updated Task Description: '
-  desc = gets.chomp()
+  print '%-73s' % 'Enter updated Task Description (60 char. numbers/letters/spaces only!): '
+  desc = is_user_input_valid('update', 'text', 60, gets.chomp())
   @list.tasks[task_index].desc=(desc) if desc != ''
       
-  print '%-38s' % 'Enter updated Date Due (mm/dd/yyyy): '
-  date_due = gets.chomp()
+  print '%-73s' % 'Enter updated Date Due (required format: mm/dd/yyyy): '
+  date_due = is_user_input_valid('update', 'date', 10, gets.chomp())
   @list.tasks[task_index].date_due=(date_due) if date_due != ''
   
-  print '%-38s' % 'Enter updated Date Done(mm/dd/yyyy): '
-  date_done = gets.chomp()
+  print '%-73s' % 'Enter updated Date Done (required format: mm/dd/yyyy): '
+  date_done = is_user_input_valid('update', 'date', 10, gets.chomp())
   @list.tasks[task_index].date_done=(date_done) if date_done != ''
       
-  print '%-38s' % 'Enter updated User ID: '
-  user_id = gets.chomp()
+  print '%-73s' % 'Enter updated User ID (8 char. numbers/letters/spaces only!): '
+  user_id = is_user_input_valid('update', 'text', 8, gets.chomp())
   @list.tasks[task_index].user_id=(user_id) if user_id != ''
     
   menu_display_tasks

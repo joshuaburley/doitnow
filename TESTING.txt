@@ -1,0 +1,162 @@
+Do-It-Now Ruby Application
+
+TESTING
+
+Notes: 
+(A) An initial set of 53 total tests (automated/manual) were run before posting v1.0 to GitHum.
+(B) For each following release, all automated tests are run before posting updated content to GitHub.
+(C) For each following release, all new/updated tests are run before posted to GitHub.
+(D) Before the user login functionality, backend database, and the Ruby on Rails releases are posted, all tests (manual/automated) will be run!
+
+1. RSpec Unit Test Cases (Automated)
+
+./spec/tasklist_spec.rb:
+
+* Tasklist class - add three (3) tasks to list
+* Tasklist class - display all tasks in list
+* Tasklist class - remove task from list
+* Tasklist class - update all elements for a task in the list
+
+./spec/task_spec.rb:
+
+* Task class - checked that task "id" starts as nil when task is created
+* Task class - checked that changing task "name" retains the changed value
+* Task class - checked that changing task "desc" retains the changed value
+* Task class - checked that changing task "date_due" retains the changed value
+* Task class - checked that changing task "date_done" retains the changed value
+* Task class - checked that changing task "user_id" retains the changed value
+
+Results: 10 Total Automated Test Run/Passed
+
+2. Functional Testcases (Manual)
+
+Run "ruby doitnow.rb"
+
+* select blank value (hit Enter with now value), error message displays with retry prompt
+* select single invalid “space”, error message displays with retry prompt
+* select single invalid numeric value, error message displays with retry prompt
+* select single invalid alphanumeric value, error message displays with retry prompt
+* select multiple characters, including valid/invalid numbers/letters/space, error message displays with retry prompt
+
+- Test option letter A (add new task)
+
+* select "a" ("A" also works)
+* create task with all blank fields (hit Enter for each task field)
+* create task with some blank fields
+* create task with no blank fields
+
+UPDATED/NEW 
+* -- create task name field with 1 - 29 characters (happy path, program asks for next field value)
+* -- create task name field with 30 characters exactly (happy path, program asks for next field value)
+* -- create task name field with 31 characters exactly (unhappy path, "...too long..." message displays with retry prompt)
+* -- create task name field with 100+ characters (unhappy path, "...too long..." message displays with retry prompt)
+
+* -- create task desc field with 1 - 59 characters (happy path, program asks for next field value)
+* -- create task desc field with 60 characters exactly (happy path, program asks for next field value)
+* -- create task desc field with 61 characters exactly (unhappy path, "...too long..." message displays with retry prompt)
+* -- create task desc field with 100+ characters (unhappy path, "...too long..." message displays with retry prompt)
+
+* -- create task date_due field with 10 characters exactly (happy path, program asks for next field value)
+* -- create task date_due field with 1 - 9 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_due field with 11 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_due field with 100 charaters (unhappy path, "...invalid format..." message displays with retry prompt)
+
+* -- create task date_done field with 10 characters exactly (happy path, program asks for next field value)
+* -- create task date_done field with 1 - 9 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_done field with 11 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_done field with 100 charaters (unhappy path, "...invalid format..." message displays with retry prompt)
+
+* -- create task user_id field with 1-7 characters (happy path, program asks for next field value)
+* -- create task user_id field with 8 characters exactly (happy path, program asks for next field value)
+* -- create task user_id field with 9 characters exactly (unhappy path, "...too long..." message will display with retry prompt)
+* -- create task user_id field with 10+ characters (unhappy path, "...too long..." message will display with retry prompt)
+
+* task list displays after each task has been added
+* the menu option bar appears without terminating the program
+
+- Test option letter B (display tasks)
+
+* select "b" ("B" will also work!)
+* all tasks appear in the list
+* table formatting looks clean (columns properly aligned)
+* the menu option bar appears without terminating the program
+
+- Test option letter C (update task)
+
+* select "c" ("C" also works)
+* select an invalid "0" value, errors message displays with retry prompt
+* select an invalid value +1 greater than the total number of tasks in the list, error message displays with retry prompt
+* select an invalid alphanumeric value, error message displays with retry prompt
+* select an invalid multi-character number, error message displays with retry prompt
+* select an invalid blank (hit Enter) value, error message displays with retry prompt
+* select an invalid "space" value, error message displays with retry prompt
+* select "e" or "E", the menu option bar appears with no tasks deleted
+
+* select a valid Task number
+
+* update only the "name" field
+UPDATED/NEW 
+* -- create task name field with 1 - 29 characters (happy path, program asks for next field value)
+* -- create task name field with 30 characters exactly (happy path, program asks for next field value)
+* -- create task name field with 31 characters exactly (unhappy path, "...too long..." message displays with retry prompt)
+* -- create task name field with 100+ characters (unhappy path, "...too long..." message displays with retry prompt)
+
+* update only the "desc" field
+UPDATED/NEW  
+* -- create task desc field with 1 - 59 characters (happy path, program asks for next field value)
+* -- create task desc field with 60 characters exactly (happy path, program asks for next field value)
+* -- create task desc field with 61 characters exactly (unhappy path, "...too long..." message displays with retry prompt)
+* -- create task desc field with 100+ characters (unhappy path, "...too long..." message displays with retry prompt)
+
+* update only the "date_due" field
+UPDATED/NEW  
+* -- create task date_due field with 10 characters exactly (happy path, program asks for next field value)
+* -- create task date_due field with 1 - 9 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_due field with 11 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_due field with 100+ charaters (unhappy path, "...invalid format..." message displays with retry prompt)
+
+* update only the "date_done" field
+UPDATED/NEW  
+* -- create task date_done field with 10 characters exactly (happy path, program asks for next field value)
+* -- create task date_done field with 1 - 9 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_done field with 11 characters (unhappy path, "...invalid format..." message displays with retry prompt)
+* -- create task date_done field with 100+ charaters (unhappy path, "...invalid format..." message displays with retry prompt)
+
+* update only the "user_id" field
+UPDATED/NEW  
+* -- create task user_id field with 1-7 characters (happy path, program asks for next field value)
+* -- create task user_id field with 8 characters exactly (happy path, program asks for next field value)
+* -- create task user_id field with 9 characters exactly (unhappy path, "...too long..." message will display with retry prompt)
+* -- create task user_id field with 10+ characters (unhappy path, "...too long..." message will display with retry prompt)
+
+* update all fields (using happy path)
+* update no fields (task values are unchanged)
+* task list displays after each task has been fully (all fields) updated
+
+- Test option letter D (delete task)
+
+* select "d" ("D" also works)
+* select an invalid "0" value, errors message displays with retry prompt
+* select an invalid value +1 greater than the total number of tasks in the list, error message displays with retry prompt
+* select an invalid alphanumeric value, error message displays with retry prompt
+* select an invalid multi-character number, error message displays with retry prompt
+* select an invalid blank (hit Enter) value, error message displays with retry prompt
+* select an invalid "space" value, error message displays with retry prompt
+* select "e" or "E", the menu option bar appears with no tasks deleted
+
+* select a valid Task number
+* the task list displays with the correct task removed
+* the Task numbers (1-n) adjust properly when removing task from the front/middle of the list
+* the Task IDs are not reset, once the task is removed, that Task ID (index number) is gone
+* delete task 1
+* delete the last task
+* after each task removal, the menu option bar appears without terminating the program
+
+- Test option letter E (exit program)
+
+* select "e" ("E" also works)
+* the "doitnow" application terminates with a "Good Bye!" message
+
+
+----------------------------------------------------
+Copyright (c) 2014 Joshua Burley
